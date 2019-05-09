@@ -41,7 +41,7 @@ public class Timer : MonoBehaviour {
             }
         }
        
-        print(gameTimer);
-        this.GetComponent<Text>().text ="Timer: " + minutes + ":" + seconds;
+   
+        this.GetComponent<Text>().text = minutes + ":" + seconds;
     }
 }

@@ -14,7 +14,24 @@ public class CollectableObjects : MonoBehaviour {
 
     public float cameraDistanceToPlayer; //Value by which the camera will increase/decrease its distance from the player when picking up the object
 
-    
+    public bool Collected;               //Value to keep track if the Object has been collected
+
+    void Start()
+    {
+        Collected = false;
+    }
+
+    void Update()
+    {
+        if (gameObject.transform.parent == player.transform)
+        {
+            Collected = true;
+        }
+        else
+        {
+            Collected = false;
+        }
+    }
 }
 
 
