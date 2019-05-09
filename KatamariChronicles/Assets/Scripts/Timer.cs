@@ -13,24 +13,26 @@ public class Timer : MonoBehaviour {
 
     bool gameEnd;
 
-    int seconds;
-    int minutes;
-    int hour;
+    string seconds;
+    string minutes;
+   
 
     void Start()
     {
         gameStart = true;
+        gameEnd = false;
     }
     void Update()
     {
         
         
-        while (gameStart == true)
+        if (gameStart == true)
         {
             gameTimer -= Time.deltaTime;
-            seconds = (int)(gameTimer % 60);
-            minutes = (int)(gameTimer / 60) % 60;
-            hour = (int)(gameTimer / 3600) / 24;
+            minutes = ((int)gameTimer/ 60).ToString("00");
+            seconds = (gameTimer % 60).ToString("00");
+            
+
 
             if (gameTimer <= 0)
             {
@@ -38,8 +40,8 @@ public class Timer : MonoBehaviour {
                 gameEnd = true;
             }
         }
-        string timerString = string.Format("{0:0}:{1:00}:{2:00}", hour, minutes, seconds);
+       
         print(gameTimer);
-        this.GetComponent<Text>().text =timerString;
+        this.GetComponent<Text>().text ="Timer: " + minutes + ":" + seconds;
     }
 }
