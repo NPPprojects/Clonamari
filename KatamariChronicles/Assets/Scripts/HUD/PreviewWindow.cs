@@ -29,7 +29,6 @@ public class PreviewWindow : MonoBehaviour {
         float extentsTotal = extents.x + extents.z + extents.y;
         transform.position = new Vector3(center.x, center.y, center.z-5);
         previewCamera.fieldOfView = extentsTotal*15;
-        print(bounds);
         Active = false;
     }
 }

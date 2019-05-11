@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PreviewItemName : MonoBehaviour {
     public GameObject player;
-    public GameObject previewItem;
     string objectName;
     float timer;
     int LastItem;
     bool DeleteName;
-
+    public bool previewItemNameState;
     
 
     void Update()
@@ -20,8 +19,8 @@ public class PreviewItemName : MonoBehaviour {
 
     void PreviewNewestItem()
     {
-        print("Barely");
-        if (previewItem.GetComponent<PreviewItem>().previewState == true)
+       
+        if (previewItemNameState == true)
         {
             print("Works");
             LastItem = player.GetComponent<PlayerController>().CollectedGameObjectList.Count - 1;
@@ -29,7 +28,7 @@ public class PreviewItemName : MonoBehaviour {
             this.GetComponent<Text>().text = objectName;
             timer = 2;
             DeleteName = true;
-
+            previewItemNameState = false;
         }
         
     }

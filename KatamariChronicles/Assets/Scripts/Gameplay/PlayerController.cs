@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float playerSpeedLimit;      //Value of how fast the player can go before the game punishes for crashing
     public float size;
 
+
     //Catergoies in which objects will be stored
     //Based on player size, new Categories will be enabled allowing for the player to pick up objects within them
 
@@ -37,10 +38,18 @@ public class PlayerController : MonoBehaviour
 
     public GameObject cameraObject;
 
+    //Preview Variables
     public GameObject previewItem;
+
+    public GameObject previewItemName;
+
     public GameObject previewWindow;
+
     float distanceToCamera;
-    
+
+    //PhoneJoystick
+
+    public PhoneController joystick;
     void Start()
     {
         x = 0;
@@ -54,6 +63,8 @@ public class PlayerController : MonoBehaviour
         x = Input.GetAxis("Horizontal") * Time.deltaTime * -rotationSpeed;
         z = Input.GetAxis("Vertical") * Time.deltaTime * verticalSpeed;
 
+        x = joystick.Horizontal() * Time.deltaTime * -rotationSpeed;
+        z = joystick.Vertical() * Time.deltaTime * verticalSpeed;
         //Facing Angle
         FacingAngle += x;
         //Apply Force to ball and position Camera
@@ -131,7 +142,9 @@ public class PlayerController : MonoBehaviour
         //Add to gameObjectList
         CollectedGameObjectList.Add(other.gameObject);
         previewItem.GetComponent<PreviewItem>().previewState = true;
+        previewItemName.GetComponent<PreviewItemName>().previewItemNameState = true;
         previewWindow.GetComponent<PreviewWindow>().Active = true;
+
 
         //Count of Objects collected
         totalCollected++;
