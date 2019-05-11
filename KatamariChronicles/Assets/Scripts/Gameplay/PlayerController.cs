@@ -11,10 +11,11 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed;     //Keeps track of the speed of the player
     public float playerSpeedLimit;      //Value of how fast the player can go before the game punishes for crashing
     public float size;
+
     //Catergoies in which objects will be stored
     //Based on player size, new Categories will be enabled allowing for the player to pick up objects within them
 
-
+    
     public GameObject[] category;
     bool[] categoryUnlock;
     public float[] categorySizeRequirement;                 //Size requirment the player has to achive before the next category unlocks 
@@ -35,6 +36,9 @@ public class PlayerController : MonoBehaviour
     Vector3 lastPosition = Vector3.zero;
 
     public GameObject cameraObject;
+
+    public GameObject previewItem;
+    public GameObject previewWindow;
     float distanceToCamera;
     
     void Start()
@@ -126,6 +130,9 @@ public class PlayerController : MonoBehaviour
         other.transform.SetParent(gameObject.transform);
         //Add to gameObjectList
         CollectedGameObjectList.Add(other.gameObject);
+        previewItem.GetComponent<PreviewItem>().previewState = true;
+        previewWindow.GetComponent<PreviewWindow>().Active = true;
+
         //Count of Objects collected
         totalCollected++;
         
