@@ -22,7 +22,6 @@ public class PreviewItemName : MonoBehaviour {
        
         if (previewItemNameState == true)
         {
-            print("Works");
             LastItem = player.GetComponent<PlayerController>().CollectedGameObjectList.Count - 1;
             objectName = player.GetComponent<PlayerController>().CollectedGameObjectList[LastItem].gameObject.name;
             this.GetComponent<Text>().text = objectName;
