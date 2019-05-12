@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         //Controls
         x = Input.GetAxis("Horizontal") * Time.deltaTime * -rotationSpeed;
         z = Input.GetAxis("Vertical") * Time.deltaTime * verticalSpeed;
-
+        //Mobile Joystick Controls
         x = joystick.Horizontal() * Time.deltaTime * -rotationSpeed;
         z = joystick.Vertical() * Time.deltaTime * verticalSpeed;
         //Facing Angle

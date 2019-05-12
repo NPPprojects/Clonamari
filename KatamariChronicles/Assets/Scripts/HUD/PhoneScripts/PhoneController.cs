@@ -5,56 +5,54 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class PhoneController : MonoBehaviour,IDragHandler, IPointerUpHandler, IPointerDownHandler// These are the interfaces the OnPointerUp method requires
+public class PhoneController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
-
-    private Image backgroundImage;
+    private Image backgroudImage;
     private Image joystickImage;
-    private Vector3 inputVector;
-    
 
+    public Vector3 inputVector;
+    
     void Start()
     {
-        backgroundImage = GetComponent<Image>();
+       backgroudImage= GetComponent<Image>();
         joystickImage = transform.GetChild(0).GetComponent<Image>();
+        inputVector = Vector3.zero;
     }
     public virtual void OnDrag(PointerEventData ped)
     {
-        Vector2 pos;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(backgroundImage.rectTransform, ped.position, ped.pressEventCamera, out pos))
-            {
-            pos.x  = (pos.x / backgroundImage.rectTransform.sizeDelta.x);
-            pos.y = (pos.x / backgroundImage.rectTransform.sizeDelta.y);
+        Vector2 pos = Vector2.zero;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(backgroudImage.rectTransform, ped.position, ped.enterEventCamera, out pos))
+        {
+            pos.x = (pos.x / backgroudImage.rectTransform.sizeDelta.x);
+            pos.y = (pos.y / backgroudImage.rectTransform.sizeDelta.y);
 
-            inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
-            inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
+            float x = (backgroudImage.rectTransform.pivot.x == 1) ? pos.x * 2 + 1 : pos.x * 2-1;
+            float y = (backgroudImage.rectTransform.pivot.y == 1) ? pos.y * 2 + 1 : pos.y * 2-1;
 
-            //Move Joystick Image
-            joystickImage.rectTransform.anchoredPosition = new Vector3(inputVector.x * (backgroundImage.rectTransform.sizeDelta.x / 3), inputVector.z * (backgroundImage.rectTransform.sizeDelta.y / 3));
+            inputVector = new Vector3(x, 0, y);
+            inputVector = (inputVector.magnitude > 1) ? inputVector.normalized : inputVector;         //Otherwise would go out of bounds when x =1 and y =1 since not normalised they become 1.33
+
+            joystickImage.rectTransform.anchoredPosition = new Vector3(inputVector.x * (backgroudImage.rectTransform.sizeDelta.x / 3), inputVector.z * (backgroudImage.rectTransform.sizeDelta.y / 3));
         }
-        
+        print("OnDrag");
     }
-
-
-    public virtual void OnPointerDown(PointerEventData ped)
-    {
-        OnDrag(ped);
-    }
-
     public virtual void OnPointerUp(PointerEventData ped)
     {
+        //Reset Joystick Position when releasing the joystick
         inputVector = Vector3.zero;
         joystickImage.rectTransform.anchoredPosition = Vector3.zero;
     }
-
+    public virtual void OnPointerDown(PointerEventData ped)
+    {
+        OnDrag(ped);            //So that the joystick would move without needing to drag it
+    }
     public float Horizontal()
     {
         if (inputVector.x != 0)
         {
             return inputVector.x;
         }
-        else
-            return Input.GetAxis("Horizontal");
+        return Input.GetAxis("Horizontal");
     }
     public float Vertical()
     {
@@ -62,7 +60,7 @@ public class PhoneController : MonoBehaviour,IDragHandler, IPointerUpHandler, IP
         {
             return inputVector.z;
         }
-        else
-            return Input.GetAxis("Vertical");
+        return Input.GetAxis("Vertical");
     }
+
 }
