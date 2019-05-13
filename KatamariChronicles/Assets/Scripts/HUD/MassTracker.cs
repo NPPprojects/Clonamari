@@ -22,6 +22,7 @@ public class MassTracker : MonoBehaviour {
 
     void Start()
     {
+        Time.timeScale = 1;
         winMinimumTotalHolder = winMinimumTotal;                        //WinMinimumTotal is used in the if statement to display minimum win screen, therefore to continue after winning the minimum amount needs to be changed
     }                                                                   //However the oringal value needs to be kept for the display so its stored
 

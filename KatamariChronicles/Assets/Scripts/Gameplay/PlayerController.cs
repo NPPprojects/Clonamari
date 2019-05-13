@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject previewWindow;
 
-    float distanceToCamera;
+    public float distanceToCamera;
 
     //PhoneJoystick
 
