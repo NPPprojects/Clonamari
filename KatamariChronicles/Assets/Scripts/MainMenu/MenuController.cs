@@ -59,8 +59,5 @@ public class MenuController : MonoBehaviour {
             uiMusicEnabler = false;
         }
     }
-    void Update()
-    {
-        print(uiMusicEnabler);
-    }
+    
 }

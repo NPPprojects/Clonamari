@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PreviewItem : MonoBehaviour {
 
     public GameObject player;
@@ -9,16 +8,18 @@ public class PreviewItem : MonoBehaviour {
     float destroyTimer=2.0f;
     bool secondDeath;
     public bool previewState;
+    public GameObject Panel;
     void Start()
     {
         previewState = false;
-       
+        
     }
     void Update()
     {
 
         transform.Rotate(new Vector3(0, -45, 0) * Time.deltaTime);
         PreviewNewestItem();
+        
       
 
     }

@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
 
-    public float gameTimer=300;
-
-    bool gameStart;
+    public float gameTimer;
+    public GameObject loseScreen;
+    public bool gameStart;
 
     bool gameEnd;
-
+    //vales for timer
     string seconds;
     string minutes;
    
@@ -29,6 +29,7 @@ public class Timer : MonoBehaviour {
         if (gameStart == true)
         {
             gameTimer -= Time.deltaTime;
+            //Displays Timer in minutes and seconds
             minutes = ((int)gameTimer/ 60).ToString("00");
             seconds = (gameTimer % 60).ToString("00");
             
@@ -38,10 +39,27 @@ public class Timer : MonoBehaviour {
             {
                 gameStart = false;
                 gameEnd = true;
+                print("This");
             }
         }
        
-   
+  
         this.GetComponent<Text>().text = minutes + ":" + seconds;
+        EndGame();
     }
+
+
+    void EndGame()          //FailState
+    {
+        if (gameEnd == true)
+        {
+            print("Works");
+            loseScreen.gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }
+        
+    }
+    
 }
+
+

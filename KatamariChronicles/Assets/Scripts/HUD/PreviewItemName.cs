@@ -9,7 +9,7 @@ public class PreviewItemName : MonoBehaviour {
     int LastItem;
     bool DeleteName;
     public bool previewItemNameState;
-    
+    GameObject parent;
 
     void Update()
     {
