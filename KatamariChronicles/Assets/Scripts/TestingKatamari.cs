@@ -94,7 +94,7 @@ public class TestingKatamari : MonoBehaviour
                     categoryUnlock[i] = true;
                     for (int y = 0; y < category[i].transform.childCount; y++) // Goes through every child of the category
                     {
-                        category[i].transform.GetChild(y).GetComponent<FixedJoint>().connectedBody = null;
+                        //category[i].transform.GetChild(y).GetComponent<FixedJoint>().connectedBody = null;
                     }
                 }
                 if (size < categorySizeRequirement[i])
@@ -109,39 +109,46 @@ public class TestingKatamari : MonoBehaviour
     }
 
     //Here comes the Katamari ;)
-    void OnTriggerEnter(Collider other)
-    {
+    //void OnTriggerEnter(Collider other)
+    //{
 
-        if (other.transform.CompareTag("Sticky"))
+    //    if (other.transform.CompareTag("Sticky"))
 
-            other.gameObject.GetComponent<CollectableObjects>();
-        transform.localScale += other.gameObject.GetComponent<CollectableObjects>().playerAffectedScale;
-        size += other.gameObject.GetComponent<CollectableObjects>().playerAffectedSize;
-        distanceToCamera += other.gameObject.GetComponent<CollectableObjects>().cameraDistanceToPlayer;
+    //        other.gameObject.GetComponent<CollectableObjects>();
+    //    transform.localScale += other.gameObject.GetComponent<CollectableObjects>().playerAffectedScale;
+    //    size += other.gameObject.GetComponent<CollectableObjects>().playerAffectedSize;
+    //    distanceToCamera += other.gameObject.GetComponent<CollectableObjects>().cameraDistanceToPlayer;
 
-        //Only ball will pick up objects
-        other.isTrigger = false;
-        other.enabled = false;
+    //    //Only ball will pick up objects
+    //    other.isTrigger = false;
+    //    other.enabled = false;
 
-        //Stay a child
-        other.transform.SetParent(gameObject.transform);
-        //Add to gameObjectList
-        CollectedGameObjectList.Add(other.gameObject);
-        //Count of Objects collected
-        totalCollected++;
-
-
+    //    //Stay a child
+    //    other.transform.SetParent(gameObject.transform);
+    //    //Add to gameObjectList
+    //    CollectedGameObjectList.Add(other.gameObject);
+    //    //Count of Objects collected
+    //    totalCollected++;
 
 
-    }
+
+
+    //}
 
     void OnCollisionEnter(Collision other)
     {
 
-        if (other.transform.CompareTag("Sticky") && (other.gameObject.GetComponent<FixedJoint>().connectedBody==null))
+        if (other.transform.CompareTag("Sticky"))
         {
-            other.gameObject.GetComponent<FixedJoint>().connectedBody = gameObject.GetComponent<Rigidbody>();
-            other.gameObject.GetComponent<Rigidbody>().useGravity = false;
+            //Connect new Object to ball and disable its gravity and it colliding with the player
+            other.transform.SetParent(gameObject.transform);
+           // other.gameObject.GetComponent<Rigidbody>().useGravity = false;
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+
+            // Changes to the player
+            GetComponent<SphereCollider>().radius += other.gameObject.GetComponent<TestingCollectablesObjects>().playerAffectedColliderRadius;
+            size += other.gameObject.GetComponent<TestingCollectablesObjects>().playerAffectedSize;
+            distanceToCamera += other.gameObject.GetComponent<TestingCollectablesObjects>().cameraDistanceToPlayer;
         }
 
     }
